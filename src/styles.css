@@ -1,0 +1,593 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * - Keep every @import in this top block, above @theme and the rest of the file. Install an
+ *   npm package before @importing its CSS. Never @import a remote URL (web fonts, CDN CSS): the
+ *   build resolves @import from the filesystem. Load those with a <link> in the head() of
+ *   src/routes/__root.tsx and name the family in a --font-* token in @theme inline below.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The design lives in this file: oklch color tokens on the shadcn variables
+ * (--background, --foreground, --primary, --secondary, --muted, --accent, ...) plus
+ * new tokens as needed, font tokens, and custom styles and animations.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --color-ink: var(--ink);
+  --color-electric: var(--electric);
+  --color-royal: var(--royal);
+  --color-sky: var(--sky);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/*
+ * NEXT SITES — the site is always dark. Brand palette:
+ *   Preto profundo #050505 · Azul elétrico #087BFF · Azul royal #0645E8 · Branco #FFFFFF
+ */
+:root {
+  --radius: 0.875rem;
+
+  /* Brand */
+  --ink: oklch(0.115 0 0); /* #050505 */
+  --electric: oklch(0.605 0.216 257.5); /* #087BFF */
+  --royal: oklch(0.485 0.249 263.6); /* #0645E8 */
+  --sky: oklch(0.722 0.148 253.8); /* light tint of electric for text on black */
+  --surface: oklch(0.155 0.009 274.3);
+  --surface-2: oklch(0.187 0.011 268.1);
+  --line: oklch(1 0 0 / 9%);
+  --line-strong: oklch(1 0 0 / 16%);
+  --text-2: oklch(0.713 0.024 260.7);
+  --text-3: oklch(0.551 0.023 264.4);
+
+  /* shadcn tokens mapped to the brand */
+  --background: var(--ink);
+  --foreground: oklch(1 0 0);
+  --card: var(--surface);
+  --card-foreground: oklch(1 0 0);
+  --popover: var(--surface);
+  --popover-foreground: oklch(1 0 0);
+  --primary: var(--electric);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: var(--surface-2);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--text-2);
+  --accent: var(--surface-2);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(1 0 0);
+  --border: var(--line);
+  --input: var(--line-strong);
+  --ring: var(--electric);
+  --chart-1: var(--electric);
+  --chart-2: var(--royal);
+  --chart-3: var(--sky);
+  --chart-4: oklch(0.85 0.05 255);
+  --chart-5: oklch(0.4 0.15 264);
+  --sidebar: var(--surface);
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: var(--electric);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: var(--surface-2);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--electric);
+
+  /* Intro splash offset used by hero entrance delays (cleared once seen) */
+  --intro: 1.35s;
+}
+
+html[data-intro-seen] {
+  --intro: 0s;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+    background-color: var(--ink);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: oklch(0.605 0.216 257.5 / 45%);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--electric);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* ───────────────────────── Utilities ───────────────────────── */
+
+@utility container-site {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 640px) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility text-gradient {
+  background: linear-gradient(
+    100deg,
+    #fff 0%,
+    var(--sky) 45%,
+    var(--electric) 75%,
+    var(--royal) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-soft {
+  background: linear-gradient(180deg, #fff 30%, oklch(1 0 0 / 55%) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Thin gradient border via mask (premium hairline) */
+@utility border-glow {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      oklch(0.722 0.148 253.8 / 55%),
+      oklch(1 0 0 / 6%) 35%,
+      oklch(1 0 0 / 4%) 65%,
+      oklch(0.485 0.249 263.6 / 45%)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* ───────────────────────── Backgrounds ───────────────────────── */
+
+.bg-grid {
+  background-image:
+    linear-gradient(oklch(1 0 0 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 4%) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+.glow-blue {
+  background: radial-gradient(
+    closest-side,
+    oklch(0.605 0.216 257.5 / 38%),
+    oklch(0.485 0.249 263.6 / 14%) 55%,
+    transparent
+  );
+  filter: blur(10px);
+}
+
+/* Spotlight that follows the cursor on cards (--mx/--my set from JS) */
+.spotlight {
+  --mx: 50%;
+  --my: 0%;
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--mx) var(--my),
+    oklch(0.605 0.216 257.5 / 13%),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* ───────────────────────── Motion ───────────────────────── */
+
+/* Scroll reveal: content only hides when JS is running (html.js) */
+html.js .reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.1, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1);
+  transition-delay: var(--delay, 0ms);
+  will-change: opacity, transform;
+}
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+html.js .reveal-scale {
+  transform: translate3d(0, 24px, 0) scale(0.96);
+}
+
+/* Hero entrance (pure CSS so it plays during hydration) */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.hero-in {
+  opacity: 0;
+  animation: rise 1s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+  animation-delay: calc(var(--intro) + var(--d, 0ms));
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+.animate-float {
+  animation: float-y 7s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: float-y 9s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+@keyframes beam {
+  0% {
+    transform: translate3d(-120%, 0, 0);
+    opacity: 0;
+  }
+  15%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(220%, 0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2.6s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+/* Wireframe "site assembling" loop in the hero visual */
+@keyframes build {
+  0%,
+  6% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  14%,
+  86% {
+    opacity: 1;
+    transform: none;
+  }
+  94%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -4px, 0);
+  }
+}
+.build {
+  animation: build 9s cubic-bezier(0.3, 0.7, 0.2, 1) infinite;
+  animation-delay: calc(var(--intro) + var(--b, 0s));
+  opacity: 0;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Responsive frame demo in "Por que escolher" */
+@keyframes morph {
+  0%,
+  22% {
+    width: 92%;
+    height: 66%;
+    border-radius: 14px;
+  }
+  33%,
+  55% {
+    width: 62%;
+    height: 78%;
+    border-radius: 18px;
+  }
+  66%,
+  88% {
+    width: 38%;
+    height: 86%;
+    border-radius: 26px;
+  }
+  100% {
+    width: 92%;
+    height: 66%;
+    border-radius: 14px;
+  }
+}
+.animate-morph {
+  animation: morph 10s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Rótulos de dispositivo sincronizados com .animate-morph */
+@keyframes device-0 {
+  0%,
+  22% {
+    color: white;
+    border-color: var(--electric);
+    background: oklch(0.605 0.216 257.5/0.15);
+  }
+  30%,
+  95% {
+    color: var(--text-3);
+    border-color: var(--line);
+    background: transparent;
+  }
+  100% {
+    color: white;
+    border-color: var(--electric);
+    background: oklch(0.605 0.216 257.5/0.15);
+  }
+}
+@keyframes device-1 {
+  0%,
+  28% {
+    color: var(--text-3);
+    border-color: var(--line);
+    background: transparent;
+  }
+  33%,
+  55% {
+    color: white;
+    border-color: var(--electric);
+    background: oklch(0.605 0.216 257.5/0.15);
+  }
+  62%,
+  100% {
+    color: var(--text-3);
+    border-color: var(--line);
+    background: transparent;
+  }
+}
+@keyframes device-2 {
+  0%,
+  61% {
+    color: var(--text-3);
+    border-color: var(--line);
+    background: transparent;
+  }
+  66%,
+  88% {
+    color: white;
+    border-color: var(--electric);
+    background: oklch(0.605 0.216 257.5/0.15);
+  }
+  95%,
+  100% {
+    color: var(--text-3);
+    border-color: var(--line);
+    background: transparent;
+  }
+}
+
+/* ───────────────────────── Intro splash ───────────────────────── */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  pointer-events: none;
+  animation: intro-out 0.75s cubic-bezier(0.7, 0, 0.2, 1) 1.05s forwards;
+}
+.intro__logo {
+  width: min(42vw, 180px);
+  opacity: 0;
+  transform: scale(0.86);
+  filter: blur(8px) drop-shadow(0 0 40px oklch(0.605 0.216 257.5 / 50%));
+  animation: intro-logo 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) 0.05s forwards;
+}
+.intro__line {
+  position: absolute;
+  bottom: calc(50% - 90px);
+  left: 50%;
+  width: 140px;
+  height: 1px;
+  margin-left: -70px;
+  overflow: hidden;
+  background: oklch(1 0 0 / 8%);
+}
+.intro__line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--electric), transparent);
+  transform: translateX(-100%);
+  animation: intro-load 1s cubic-bezier(0.6, 0, 0.3, 1) 0.1s forwards;
+}
+@keyframes intro-logo {
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0) drop-shadow(0 0 40px oklch(0.605 0.216 257.5 / 45%));
+  }
+}
+@keyframes intro-load {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, -2%, 0);
+  }
+}
+html[data-intro-seen] .intro {
+  display: none;
+}
+
+/* ───────────────────────── Reduced motion ───────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .intro {
+    display: none;
+  }
+  .build {
+    opacity: 1;
+    animation: none !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
